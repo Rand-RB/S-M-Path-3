@@ -1,0 +1,61 @@
+#Writing Publisher And Subscriber Nodes In 3 Steps (Python)
+
+#After creating catkin-package and install all package dependencies 
+#(you can install them by following these steps http://wiki.ros.org/ROS/Tutorials/CreatingPackage)
+#“In this work space we will run (Hello World) node”
+
+#1- Create a folder to store your python scripts
+
+#- change the directory into your package by $roscd command
+$ roscd beginner_tutorials
+#create a folder called scripts
+$ mkdir scripts
+#change directory into this folder 
+$ cd scripts 
+
+#2-Write your node code
+
+#For publisher(talker) node: 
+#you can install this code from gitthub by the below command or write your own 
+$ wget https://raw.github.com/ros/ros_tutorials/kinetic-devel/rospy_tutorials/001_talker_listener/talker.py
+#change the access permission
+$ chmod +x talker.py
+#Add the following to your CMakeLists.txt. file then save the file
+catkin_install_python(PROGRAMS scripts/talker.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+#For subscriber node:
+$ roscd beginner_tutorials/scripts/
+#you can install this code from gitthub by the below command or write your own                                                                                              
+$ wget https://raw.github.com/ros/ros_tutorials/kinetic-devel/rospy_tutorials/001_talker_listener/listener.py
+#change the access permission                                                                                                                                                                                
+$ chmod +x listener.py
+#Add the following to your CMakeLists.txt. file then save the file
+catkin_install_python(PROGRAMS scripts/talker.py scripts/listener.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+#3-Run your node and examine your result 
+$ cd ~/catkin_ws
+$ catkin_make
+#open new terminal
+$ roscore
+#make sure you have sourced your workspace's setup.sh file after calling catkin_make but before trying to use your applications
+$ cd ~/catkin_ws
+$ source ./devel/setup.bash
+#run publisher node 
+$ rosrun beginner_tutorials talker.py
+#open new terminal and run subscriber node “run both nodes at the same time”
+$ rosrun beginner_tutorials listener.py
+
+#congrats!! you did a great job
+
+
+#Resource http://wiki.ros.org/ROS/Tutorials/ExaminingPublisherSubscriber
+
+
+Sample output(:
+for roscore
+& publisher 
+& subscriber in another folder in this repo
